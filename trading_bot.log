@@ -1,0 +1,57 @@
+2025-09-14 13:22:38,691 - INFO -   - Symbols found: 40
+2025-09-14 13:22:38,691 - INFO -   - Analyzed: 33
+2025-09-14 13:22:38,692 - INFO -   - Signals generated: 6
+2025-09-14 13:22:38,692 - INFO -   - High confidence signals: 0
+2025-09-14 13:22:38,692 - INFO -   - Duration: 54.0 seconds
+2025-09-14 13:22:38,699 - INFO -   Symbol: DOGEUSDT
+2025-09-14 13:22:38,699 - INFO -   Action: BUY
+2025-09-14 13:22:38,699 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,699 - INFO -   Entry Price: $0.290650
+2025-09-14 13:22:38,700 - INFO -   Stop Loss: $0.273439
+2025-09-14 13:22:38,700 - INFO -   Take Profit: $0.325073
+2025-09-14 13:22:38,700 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,700 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 70.7, MACD bullish, Strong trend
+2025-09-14 13:22:38,710 - INFO -   Symbol: FDUSDUSDT
+2025-09-14 13:22:38,710 - INFO -   Action: BUY
+2025-09-14 13:22:38,710 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,710 - INFO -   Entry Price: $0.998200
+2025-09-14 13:22:38,711 - INFO -   Stop Loss: $0.968254
+2025-09-14 13:22:38,711 - INFO -   Take Profit: $1.058092
+2025-09-14 13:22:38,711 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,711 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 54.5, MACD bullish, Strong trend
+2025-09-14 13:22:38,714 - INFO -   Symbol: BNBUSDT
+2025-09-14 13:22:38,714 - INFO -   Action: BUY
+2025-09-14 13:22:38,714 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,714 - INFO -   Entry Price: $937.680000
+2025-09-14 13:22:38,715 - INFO -   Stop Loss: $909.549600
+2025-09-14 13:22:38,715 - INFO -   Take Profit: $993.940800
+2025-09-14 13:22:38,715 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,715 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 71.5, MACD bullish, Strong trend
+2025-09-14 13:22:38,718 - INFO -   Symbol: YGGUSDT
+2025-09-14 13:22:38,718 - INFO -   Action: BUY
+2025-09-14 13:22:38,718 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,719 - INFO -   Entry Price: $0.245400
+2025-09-14 13:22:38,719 - INFO -   Stop Loss: $0.210290
+2025-09-14 13:22:38,719 - INFO -   Take Profit: $0.315620
+2025-09-14 13:22:38,719 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,720 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 67.8, MACD bullish, Strong trend
+2025-09-14 13:22:38,722 - INFO -   Symbol: BIOUSDT
+2025-09-14 13:22:38,722 - INFO -   Action: BUY
+2025-09-14 13:22:38,723 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,723 - INFO -   Entry Price: $0.174000
+2025-09-14 13:22:38,723 - INFO -   Stop Loss: $0.156119
+2025-09-14 13:22:38,723 - INFO -   Take Profit: $0.209761
+2025-09-14 13:22:38,724 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,724 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 64.3, MACD bullish, Strong trend
+2025-09-14 13:22:38,726 - INFO -   Symbol: EIGENUSDT
+2025-09-14 13:22:38,726 - INFO -   Action: BUY
+2025-09-14 13:22:38,727 - INFO -   Confidence: 70.0%
+2025-09-14 13:22:38,727 - INFO -   Entry Price: $1.624000
+2025-09-14 13:22:38,727 - INFO -   Stop Loss: $1.494217
+2025-09-14 13:22:38,727 - INFO -   Take Profit: $1.883566
+2025-09-14 13:22:38,728 - INFO -   Risk/Reward: 2.00
+2025-09-14 13:22:38,728 - INFO -   Reason: Bullish breakout: Above BB middle, Bullish EMA alignment, RSI momentum 60.5, MACD bullish, Strong trend
+2025-09-14 13:22:38,730 - INFO -   - Scan Duration: 54.0 seconds
+2025-09-14 13:22:38,730 - INFO -   - Symbols Processed: 33
+2025-09-14 13:22:38,730 - INFO -   - Signals Generated: 6
+2025-09-14 13:22:38,731 - INFO -   - Success Rate: 18.2%

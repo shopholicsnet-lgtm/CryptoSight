@@ -1,0 +1,45 @@
+# Core Data Science
+pandas>=1.5.0
+numpy>=1.21.0
+scipy>=1.9.0
+
+# Technical Analysis
+TA-Lib>=0.4.25
+
+# Cryptocurrency Exchange
+ccxt>=3.0.0
+
+# Web Dashboard
+streamlit>=1.25.0
+plotly>=5.15.0
+
+# HTTP Requests
+requests>=2.28.0
+
+# Date/Time
+python-dateutil>=2.8.0
+
+# Environment Variables
+python-dotenv>=1.0.0
+
+# Database
+sqlite3
+
+# Mathematical Operations
+scikit-learn>=1.1.0
+
+# Visualization (optional)
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Discord Integration
+discord-webhook>=1.0.0
+
+# Logging
+logging
+
+# Threading
+threading
+
+# Additional utilities
+typing-extensions>=4.0.0
