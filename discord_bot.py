@@ -376,3 +376,7 @@ class DiscordNotifier:
             "🎯 CryptoSight Discord integration is working!",
             "SUCCESS"
         )
+    
+    def send_discord_notification(self, message: str, notification_type: str = 'INFO') -> bool:
+        """Send a general Discord notification with message and type"""
+        return self.send_alert("Trading Notification", message, notification_type)

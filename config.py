@@ -67,6 +67,7 @@ class TradingConfig:
     # =============================================================================
     SCAN_INTERVAL_MINUTES: int = 15           
     MAX_COINS_TO_SCAN: int = 100              
+    MIN_CANDLES: int = 50                     # Minimum candles required for analysis
     PREFERRED_QUOTE_CURRENCIES: List[str] = ['USDT']
     
     # Excluded Tokens (Avoid these)

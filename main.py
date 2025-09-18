@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 try:
     from data_fetcher import DataFetcher
-    from strategy_engine import EnhancedStrategyEngine
+    from strategy_engine import Enhanced7StrategyEngine
     from config import TradingConfig
 except ImportError as e:
     logger.error(f"Critical import error: {e}")
@@ -44,7 +44,7 @@ class TradingBot:
             
             # Initialize components
             self.data_fetcher = DataFetcher()
-            self.strategy_engine = EnhancedStrategyEngine()
+            self.strategy_engine = Enhanced7StrategyEngine()
             self.config = TradingConfig()
             
             # Performance tracking
@@ -242,6 +242,31 @@ class TradingBot:
         
         if summary['last_scan']:
             logger.info(f"  Last Scan: {summary['last_scan'].strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    def approve_trade(self, trade_data: Dict) -> bool:
+        """Approve a trade and send notification"""
+        try:
+            # Import DiscordNotifier here to avoid circular imports
+            from discord_bot import DiscordNotifier
+            
+            discord_notifier = DiscordNotifier(self.config.DISCORD_WEBHOOK_URL)
+            
+            # Send notification with both required arguments
+            message = f"Trade approved for {trade_data.get('symbol', 'Unknown')} - {trade_data.get('signal', 'Unknown')} signal"
+            notification_type = "SUCCESS"
+            
+            result = discord_notifier.send_discord_notification(message, notification_type)
+            
+            if result:
+                logger.info(f"✅ Trade approval notification sent successfully")
+            else:
+                logger.warning("⚠️ Failed to send trade approval notification")
+                
+            return True
+            
+        except Exception as e:
+            logger.error(f"❌ Error in approve_trade: {e}")
+            return False
 
 async def main():
     """Main function for standalone execution"""
