@@ -6,7 +6,9 @@ import streamlit as st
 import ccxt
 import requests
 import logging
+import pandas as pd
 from config import config
+from strategy_engine import Enhanced7StrategyEngine
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -16,6 +18,10 @@ class MarketScanner:
         self.exchange = self._init_exchange()
         self.coingecko_base = "https://api.coingecko.com/api/v3"
         self.binance_symbols = set()
+        
+        # Initialize the strategy engine
+        self.strategy_engine = Enhanced7StrategyEngine()
+        
         if self.exchange:
             try:
                 markets = self.exchange.load_markets()
@@ -69,3 +75,31 @@ class MarketScanner:
         except Exception as e:
             logger.error(f"❌ Error fetching or validating coin symbols: {e}")
             return []
+    
+    def analyze_market_data(self, market_data: dict) -> dict:
+        """Analyze market data using the strategy engine"""
+        try:
+            # Check if we have enough candles for analysis
+            min_candles_required = config.MIN_CANDLES  # Fixed: was config.MIN_CANDLES_FOR_SCAN
+            
+            results = {}
+            for symbol, df in market_data.items():
+                if df is None or len(df) < min_candles_required:
+                    logger.warning(f"Insufficient data for {symbol}: {len(df) if df is not None else 0} candles")
+                    continue
+                
+                # Use the correct method name - run_all_strategies is available in Enhanced7StrategyEngine
+                analysis_result = self.strategy_engine.run_all_strategies(df, symbol)
+                
+                # Use propose_trade_parameters method which is available in Enhanced7StrategyEngine
+                if analysis_result.get('signal') != 'HOLD':
+                    trade_params = self.strategy_engine.propose_trade_parameters(analysis_result)
+                    analysis_result['trade_parameters'] = trade_params
+                
+                results[symbol] = analysis_result
+                
+            return results
+            
+        except Exception as e:
+            logger.error(f"❌ Error analyzing market data: {e}")
+            return {}

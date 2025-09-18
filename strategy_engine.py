@@ -611,10 +611,164 @@ class EnhancedStrategyEngine:
                 confidence += 20
                 reasons.append("Bearish momentum")
             
+        except Exception as e:
+            return {'signal': 'HOLD', 'confidence': 0, 'reason': f"Error: {e}"}
+
+
+class Enhanced7StrategyEngine(EnhancedStrategyEngine):
+    """Enhanced 7-Strategy Engine with additional methods"""
+    
+    def __init__(self):
+        """Initialize the Enhanced7StrategyEngine"""
+        super().__init__()
+        # Add additional strategy configurations
+        self.strategies.update({
+            'volume_breakout': self._volume_breakout_strategy,
+            'mean_reversion': self._mean_reversion_strategy
+        })
+        logger.info("🧠 Enhanced 7-Strategy Engine initialized with 7 strategies")
+    
+    def run_all_strategies(self, df: pd.DataFrame, symbol: str) -> Dict:
+        """Alias for analyze_all_strategies to match expected interface"""
+        return self.analyze_all_strategies(df, symbol)
+    
+    def propose_trade_parameters(self, signal_data: Dict) -> Dict:
+        """Propose optimized trade parameters based on signal data"""
+        try:
+            signal_type = signal_data.get('signal', 'HOLD')
+            confidence = signal_data.get('confidence', 0)
+            entry_price = signal_data.get('entry_price', 0)
+            
+            if signal_type == 'HOLD' or confidence < 60:
+                return {
+                    'proposed': False,
+                    'reason': f'Signal quality insufficient: {signal_type} at {confidence}% confidence'
+                }
+            
+            # Calculate position sizing based on confidence
+            base_position_size = 100  # Base position size in USD
+            confidence_multiplier = min(confidence / 100, 1.0)
+            
+            proposed_position_size = base_position_size * confidence_multiplier
+            
+            # Risk management parameters
+            if confidence >= 80:
+                stop_loss_multiplier = 1.5
+                take_profit_multiplier = 3.0
+            elif confidence >= 70:
+                stop_loss_multiplier = 2.0
+                take_profit_multiplier = 2.5
+            else:
+                stop_loss_multiplier = 2.5
+                take_profit_multiplier = 2.0
+            
+            return {
+                'proposed': True,
+                'position_size_usd': proposed_position_size,
+                'stop_loss_multiplier': stop_loss_multiplier,
+                'take_profit_multiplier': take_profit_multiplier,
+                'entry_price': entry_price,
+                'confidence': confidence,
+                'signal_type': signal_type,
+                'reason': f'Optimized parameters for {confidence}% confidence {signal_type} signal'
+            }
+            
+        except Exception as e:
+            logger.error(f"Error proposing trade parameters: {e}")
+            return {
+                'proposed': False,
+                'reason': f'Error calculating parameters: {e}'
+            }
+    
+    def _volume_breakout_strategy(self, df: pd.DataFrame, market_regime: MarketRegime) -> Dict:
+        """Volume breakout strategy - sixth strategy"""
+        try:
+            latest = df.iloc[-1]
+            confidence = 0
+            reasons = []
+            
+            # Check for volume breakout
+            if latest['volume_ratio'] >= 2.5:
+                confidence += 40
+                reasons.append(f"Volume breakout {latest['volume_ratio']:.1f}x")
+                
+                # Direction based on price action
+                if latest['close'] > latest['open']:
+                    signal_type = 'BUY'
+                    reasons.append("Bullish price action")
+                    confidence += 30
+                else:
+                    signal_type = 'SELL'
+                    reasons.append("Bearish price action")
+                    confidence += 30
+                    
+                # Additional confirmations
+                if latest['close'] > latest['bb_middle']:
+                    confidence += 15
+                    reasons.append("Above BB middle")
+                    
+                if latest['rsi'] > 50:
+                    confidence += 15
+                    reasons.append("RSI momentum")
+                
+                return {
+                    'signal': signal_type if confidence >= 65 else 'HOLD',
+                    'confidence': confidence,
+                    'reason': f"Vol Breakout: {', '.join(reasons)}"
+                }
+            else:
+                return {'signal': 'HOLD', 'confidence': 0, 'reason': "No volume breakout"}
+                
+        except Exception as e:
+            return {'signal': 'HOLD', 'confidence': 0, 'reason': f"Error: {e}"}
+    
+    def _mean_reversion_strategy(self, df: pd.DataFrame, market_regime: MarketRegime) -> Dict:
+        """Mean reversion strategy - seventh strategy"""
+        try:
+            latest = df.iloc[-1]
+            confidence = 0
+            reasons = []
+            
+            # Check for oversold/overbought conditions
+            bb_position = (latest['close'] - latest['bb_lower']) / (latest['bb_upper'] - latest['bb_lower'])
+            
+            if bb_position <= 0.1:  # Near lower BB
+                confidence += 40
+                reasons.append("Near lower BB")
+                signal_type = 'BUY'
+                
+                if latest['rsi'] < 35:
+                    confidence += 25
+                    reasons.append("RSI oversold")
+                    
+                if latest['stoch_k'] < 25:
+                    confidence += 20
+                    reasons.append("Stoch oversold")
+                    
+            elif bb_position >= 0.9:  # Near upper BB
+                confidence += 40
+                reasons.append("Near upper BB")
+                signal_type = 'SELL'
+                
+                if latest['rsi'] > 65:
+                    confidence += 25
+                    reasons.append("RSI overbought")
+                    
+                if latest['stoch_k'] > 75:
+                    confidence += 20
+                    reasons.append("Stoch overbought")
+            else:
+                return {'signal': 'HOLD', 'confidence': 0, 'reason': "Price in BB middle range"}
+            
+            # Volume confirmation
+            if latest['volume_ratio'] > 1.2:
+                confidence += 15
+                reasons.append("Volume support")
+            
             return {
                 'signal': signal_type if confidence >= 70 else 'HOLD',
                 'confidence': confidence,
-                'reason': f"Volume: {', '.join(reasons)}"
+                'reason': f"Mean Rev: {', '.join(reasons)}"
             }
             
         except Exception as e:
